@@ -17,6 +17,9 @@ const Cart = () => {
         return<CartItem data={product}/>
        }
         })}
+        <div className="checkout"><p>subtotal Ksh: </p></div>
+        <button  className="addToCartBttn">Continue Shopping</button>
+        <button  className="addToCartBttn">checkout</button>
       </div>
     </div>
   )
