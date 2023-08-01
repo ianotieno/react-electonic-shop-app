@@ -7,7 +7,7 @@ const CartItem = (props) => {
   return (
     <div className="cartItem">
       <img src={productImage}/>
-      <div className="description"></div>
+      <div className="description">
       <p><b>{productName}</b></p>
       <p><b>ksh: {price}</b></p>
       <div className="countHandler"> 
@@ -15,6 +15,7 @@ const CartItem = (props) => {
       <input value={cartItems[id]} onChange={(e)=>updateCartItemCount(Number(e.target.value),id)}/>
       <button onClick={()=>addToCart(id)}>+</button>
       </div>
+    </div>
     </div>
 
   )

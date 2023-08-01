@@ -7,7 +7,7 @@ const Shop = () => {
   
       <div className="shop">
         <div className="shopTitle">
-          <h1>MacAgutu Electronics </h1>
+          <h1>McAgutu Electronics </h1>
         </div>
   
         <div className="products">
