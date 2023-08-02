@@ -1,21 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import{ShoppingCart} from 'phosphor-react'
-import "./Navbar.css"
-const Navbar = () => {
+import{Placeholder, ShoppingCart} from 'phosphor-react'
+import { Container, FormControl, Navbar } from 'react-bootstrap'
+const Nav = () => {
   return (
+    <Navbar bg="dark" variant="dark" style={{height:60}}>
+      <Container>
+        <Navbar.Brand>
+        <Link to="/">McAgutu Stores</Link>
+        </Navbar.Brand>
+        <Navbar.Text className="Search..">
+          <FormControl style={{width:500}}
+          Placeholder="Search a product"
+        />
+        </Navbar.Text>
+      </Container>
+    </Navbar>
     
-    <div className="navbar">
-     
-      <div className="links">
-     <Link to="/">Shop</Link>
-     <Link to="/cart"><ShoppingCart size={32}/></Link>
-     
 
-      </div>
-    </div>
-   
-  )
-}
+     
+  );
+};
 
-export default Navbar
+export default Nav
+
+
+    
+    
