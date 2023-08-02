@@ -1,16 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Placeholder, ShoppingCart } from 'phosphor-react';
-import { Container, FormControl, Navbar, Dropdown, Badge } from 'react-bootstrap';
+import { Container, FormControl, Navbar, Dropdown, Badge , Button} from 'react-bootstrap';
 import { PRODUCTS } from '../product'// Assuming this is the correct path to the products file
 import { ShopContext } from '../context/shop-context'
-
-
+import{useNavigate} from "react-router-dom"
 
 const Nav = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useContext(ShopContext);
-
+  const navigate = useNavigate();
   const filteredProducts = PRODUCTS.filter(
     (product) => product.productName.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -57,7 +56,16 @@ const Nav = () => {
                 );
               }
               return null;
+              
             })}
+             <Dropdown.Divider />
+            <Dropdown.Item>
+            <Link to="/cart">
+                    <Button style={{ width: "95%", margin: "0 10px" }}>
+                      Go To Cart
+                    </Button>
+                  </Link>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Container>
