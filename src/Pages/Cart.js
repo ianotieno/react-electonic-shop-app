@@ -8,6 +8,7 @@ import "./cart.css"
 const Cart = () => {
   const {cartItems,  getTotalCartAmount }=useContext(ShopContext);
   const totalAmount =getTotalCartAmount();
+  
   const navigate = useNavigate();
   return (
     <div className="cart">
