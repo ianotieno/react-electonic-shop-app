@@ -4,15 +4,19 @@ import { Placeholder, ShoppingCart } from 'phosphor-react';
 import { Container, FormControl, Navbar, Dropdown, Badge , Button} from 'react-bootstrap';
 import { PRODUCTS } from '../product'// Assuming this is the correct path to the products file
 import { ShopContext } from '../context/shop-context'
-import{useNavigate} from "react-router-dom"
+import '../Pages/cart.css'
 
-const Nav = () => {
+
+
+
+const Nav = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useContext(ShopContext);
-  const navigate = useNavigate();
-  const filteredProducts = PRODUCTS.filter(
-    (product) => product.productName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    onSearch(e.target.value); // Call the onSearch prop to update searchQuery in the App component
+  };
 
   return (
     <Navbar bg="dark" variant="dark" style={{ height: 60 }}>
@@ -20,14 +24,14 @@ const Nav = () => {
         <Navbar.Brand>
           <Link to="/">McAgutu Stores</Link>
         </Navbar.Brand>
-        <Navbar.Text className="Search..">
+        <Navbar.Text className="Search">
           <FormControl
             style={{ width: 500 }}
             placeholder="Search a product"
             className="m-auto"
             aria-label="Search"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearch}
           />
         </Navbar.Text>
         <Dropdown>
@@ -39,32 +43,9 @@ const Nav = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu style={{ minWidth: 370 }}>
-            {Object.entries(cartItems).map(([itemId, itemCount]) => {
-              if (itemCount > 0) {
-                const product = PRODUCTS.find((product) => product.id === Number(itemId));
-                return (
-                  <Dropdown.Item key={product.id}>
-                    <Link to={`/product/${product.id}`}>
-                      <img
-                        src={product.productImage}
-                        alt={product.productName}
-                        style={{ height: 40, marginRight: 10 }}
-                      />
-                      {`${product.productName} (x${itemCount})`}
-                    </Link>
-                  </Dropdown.Item>
-                );
-              }
-              return null;
-              
-            })}
-             <Dropdown.Divider />
+            <Dropdown.Divider />
             <Dropdown.Item>
-            <Link to="/cart">
-                    <Button style={{ width: "95%", margin: "0 10px" }}>
-                      Go To Cart
-                    </Button>
-                  </Link>
+              <Link to="/carts">Go to Cart</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -74,4 +55,11 @@ const Nav = () => {
 };
 
 export default Nav;
+
+
+
+
+
+
+
 
