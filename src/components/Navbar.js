@@ -5,20 +5,19 @@ import { Container, FormControl, Navbar, Dropdown, Badge , Button} from 'react-b
 import { PRODUCTS } from '../product'// Assuming this is the correct path to the products file
 import { ShopContext } from '../context/shop-context'
 import '../Pages/cart.css'
+import SearchComponent from '../Pages/SearchComponent';
 
 
-
-
-const Nav = ({ onSearch }) => {
+const Nav = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useContext(ShopContext);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    onSearch(e.target.value); // Call the onSearch prop to update searchQuery in the App component
   };
 
   return (
+    <>
     <Navbar bg="dark" variant="dark" style={{ height: 60 }}>
       <Container>
         <Navbar.Brand>
@@ -34,14 +33,16 @@ const Nav = ({ onSearch }) => {
             onChange={handleSearch}
           />
         </Navbar.Text>
+
+        <Link to="/cart" style={{ textDecoration: 'none', marginRight: 10 }}>
+          <ShoppingCart size={32} />
+          <Badge>{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
+        </Link>
+
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            <Link to="/cart">
-              <ShoppingCart size={32} />
-            </Link>
-            <Badge>{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
+            Options
           </Dropdown.Toggle>
-
           <Dropdown.Menu style={{ minWidth: 370 }}>
             <Dropdown.Divider />
             <Dropdown.Item>
@@ -49,17 +50,14 @@ const Nav = ({ onSearch }) => {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </Container>
+      </Container> 
     </Navbar>
+    <Container>
+    <SearchComponent searchQuery={searchQuery} />
+  </Container>
+  </>
   );
 };
 
 export default Nav;
-
-
-
-
-
-
-
 

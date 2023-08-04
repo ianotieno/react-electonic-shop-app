@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PRODUCTS } from '../product';
 
+
+
 const SearchComponent = ({ searchQuery }) => {
+  // If searchQuery is empty, do not display anything
+  if (!searchQuery.trim()) {
+    return null;
+  }
+
   const filteredProducts = PRODUCTS.filter((product) =>
     product.productName.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -15,11 +22,7 @@ const SearchComponent = ({ searchQuery }) => {
         filteredProducts.map((product) => (
           <div key={product.id}>
             <Link to={`/product/${product.id}`}>
-              <img
-                src={product.productImage}
-                alt={product.productName}
-                style={{ height: 40, marginRight: 10 }}
-              />
+              <img src={product.productImage} alt={product.productName} style={{ height: 40, marginRight: 10 }} />
               {`${product.productName}`}
             </Link>
           </div>

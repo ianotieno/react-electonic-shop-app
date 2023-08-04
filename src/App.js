@@ -9,19 +9,12 @@ import SearchComponent from './Pages/SearchComponent'; // Import the SearchCompo
 import './App.css';
 
 
-
 function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
   return (
     <div className="App">
       <ShopContextProvider>
         <BrowserRouter>
-          <Nav onSearch={handleSearch} /> {/* Pass handleSearch as onSearch prop */}
+          <Nav />
           <div>
             <Routes>
               <Route path="/" exact element={<Shop />} />
