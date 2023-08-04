@@ -21,10 +21,10 @@ const SearchComponent = ({ searchQuery }) => {
       ) : (
         filteredProducts.map((product) => (
           <div key={product.id}>
-            <Link to={`/product/${product.id}`}>
+           
               <img src={product.productImage} alt={product.productName} style={{ height: 40, marginRight: 10 }} />
               {`${product.productName}`}
-            </Link>
+           
           </div>
         ))
       )}

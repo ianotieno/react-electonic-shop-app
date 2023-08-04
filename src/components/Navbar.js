@@ -7,14 +7,10 @@ import { ShopContext } from '../context/shop-context'
 import '../Pages/cart.css'
 import SearchComponent from '../Pages/SearchComponent';
 
-
 const Nav = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useContext(ShopContext);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
 
   return (
     <>
@@ -30,27 +26,46 @@ const Nav = () => {
             className="m-auto"
             aria-label="Search"
             value={searchQuery}
-            onChange={handleSearch}
+            type="text"
+            onChange={e=>setSearchQuery(e.target.value)}
           />
         </Navbar.Text>
-
-        <Link to="/cart" style={{ textDecoration: 'none', marginRight: 10 }}>
-          <ShoppingCart size={32} />
-          <Badge>{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
-        </Link>
-
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Options
+            
+              <ShoppingCart size={32} />
+            
+            <Badge>{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
           </Dropdown.Toggle>
+
           <Dropdown.Menu style={{ minWidth: 370 }}>
+            {Object.entries(cartItems).map(([itemId, itemCount]) => {
+              if (itemCount > 0) {
+                const product = PRODUCTS.find((product) => product.id === Number(itemId));
+                return (
+                  <Dropdown.Item key={product.id}>
+                  
+                      <img
+                        src={product.productImage}
+                        alt={product.productName}
+                        style={{ height: 40, marginRight: 1}}
+                      />
+                      {`${product.productName} (x${itemCount})`}
+                   
+                  </Dropdown.Item>
+                );
+              }
+              return null;
+            })}
             <Dropdown.Divider />
             <Dropdown.Item>
-              <Link to="/carts">Go to Cart</Link>
+            <button className="addToCartBttn">
+              <Link to="/cart">Go to Cart</Link>
+              </button>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </Container> 
+      </Container>
     </Navbar>
     <Container>
     <SearchComponent searchQuery={searchQuery} />
@@ -60,4 +75,3 @@ const Nav = () => {
 };
 
 export default Nav;
-
