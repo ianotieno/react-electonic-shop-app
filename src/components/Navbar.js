@@ -1,76 +1,72 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Placeholder, ShoppingCart } from 'phosphor-react';
-import { Container, FormControl, Navbar, Dropdown, Badge , Button} from 'react-bootstrap';
-import { PRODUCTS } from '../product'// Assuming this is the correct path to the products file
-import { ShopContext } from '../context/shop-context'
-import '../Pages/cart.css'
+import { ShoppingCart } from 'phosphor-react';
+import { Container, FormControl, Navbar, Dropdown, Badge, Button } from 'react-bootstrap';
+import { PRODUCTS } from '../product'; // Assuming this is the correct path to the products file
+import { ShopContext } from '../context/shop-context';
+import '../Pages/cart.css';
 import SearchComponent from '../Pages/SearchComponent';
 
 const Nav = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useContext(ShopContext);
 
-
   return (
     <>
-    <Navbar bg="dark" variant="dark" style={{ height: 60 }}>
-      <Container>
-        <Navbar.Brand>
-          <Link to="/">McAgutu Stores</Link>
-        </Navbar.Brand>
-        <Navbar.Text className="Search">
-          <FormControl
-            style={{ width: 500 }}
-            placeholder="Search a product"
-            className="m-auto"
-            aria-label="Search"
-            value={searchQuery}
-            type="text"
-            onChange={e=>setSearchQuery(e.target.value)}
-          />
-        </Navbar.Text>
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            
-              <ShoppingCart size={32} />
-            
-            <Badge>{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
-          </Dropdown.Toggle>
+      <Navbar bg="dark" variant="dark" expand="lg" className="p-2">
+        <Container fluid>
+          <Navbar.Brand>
+            <Link to="/" className="text-white">MacAgutu Stores</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <FormControl
+              type="text"
+              placeholder="Search a product"
+              className="mr-sm-2 w-full sm:w-auto"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Dropdown className="ml-auto">
+              <Dropdown.Toggle variant="success" id="dropdown-basic" className="cart-toggle">
+                <ShoppingCart size={32} className="text-white" />
+                <Badge className="cart-badge">{Object.values(cartItems).reduce((acc, curr) => acc + curr, 0)}</Badge>
+              </Dropdown.Toggle>
 
-          <Dropdown.Menu style={{ minWidth: 370 }}>
-            {Object.entries(cartItems).map(([itemId, itemCount]) => {
-              if (itemCount > 0) {
-                const product = PRODUCTS.find((product) => product.id === Number(itemId));
-                return (
-                  <Dropdown.Item key={product.id}>
-                  
-                      <img
-                        src={product.productImage}
-                        alt={product.productName}
-                        style={{ height: 40, marginRight: 1}}
-                      />
-                      {`${product.productName} (x${itemCount})`}
-                   
-                  </Dropdown.Item>
-                );
-              }
-              return null;
-            })}
-            <Dropdown.Divider />
-            <Dropdown.Item>
-            <button className="addToCartBttn">
-              <Link to="/cart">Go to Cart</Link>
-              </button>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+              <Dropdown.Menu style={{ minWidth: 370 }} className="cart-dropdown">
+                {Object.entries(cartItems).map(([itemId, itemCount]) => {
+                  if (itemCount > 0) {
+                    const product = PRODUCTS.find((product) => product.id === Number(itemId));
+                    return (
+                      <Dropdown.Item key={product.id} className="cart-item">
+                        <img
+                          src={product.productImage}
+                          alt={product.productName}
+                          className="cart-item-image"
+                        />
+                        <div className="cart-item-details">
+                          {`${product.productName} (x${itemCount})`}
+                        </div>
+                      </Dropdown.Item>
+                    );
+                  }
+                  return null;
+                })}
+                <Dropdown.Divider />
+                <Dropdown.Item>
+                  <Button variant="primary" className="w-full cart-button">
+                    <Link to="/cart" className="text-white">Go to Cart</Link>
+                  </Button>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Container className="mt-4">
+        <SearchComponent searchQuery={searchQuery} />
       </Container>
-    </Navbar>
-    <Container>
-    <SearchComponent searchQuery={searchQuery} />
-  </Container>
-  </>
+    </>
   );
 };
 

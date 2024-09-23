@@ -6,9 +6,9 @@ import { ShopContext } from '../context/shop-context';
     const{ addToCart,cartItems }=useContext(ShopContext); 
    const cartItemAmount=cartItems[id]
   return (
-    <div className="product">
+    <div className="max-w-[1640px] m-auto px-4 py-12">
      <img src={productImage} />
-     <div className="description">
+     <div className=" text-center border border-gray-300 px-2 py-1">
         <p><b>
             {productName}
             </b></p>

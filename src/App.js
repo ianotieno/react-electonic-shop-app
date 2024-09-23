@@ -8,19 +8,25 @@ import SearchComponent from './Pages/SearchComponent'; // Import the SearchCompo
 
 import './App.css';
 
-
 function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <div className="App">
       <ShopContextProvider>
         <BrowserRouter>
-          <Nav />
+          <Nav onSearchChange={handleSearchChange} />
           <div>
             <Routes>
               <Route path="/" exact element={<Shop />} />
               <Route path="/cart" exact element={<Cart />} />
             </Routes>
           </div>
+          {searchQuery && <SearchComponent searchQuery={searchQuery} />}
         </BrowserRouter>
       </ShopContextProvider>
     </div>
@@ -28,4 +34,3 @@ function App() {
 }
 
 export default App;
-
